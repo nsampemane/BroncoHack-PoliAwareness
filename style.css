@@ -1,9 +1,22 @@
 @font-face {
     font-family: fillFont;
-    src: url("fonts/OstrichSans-Light.otf");
+    src: url("Fonts/OstrichSans-Light.otf");
 }
 
+@font-face {
+	font-family: mainFont;
+    src: url("Fonts/OstrichSans-Medium.otf");
+}
+
+@font-face {
+	font-family: titleFont;
+    src: url("Fonts/OstrichSans-Medium.otf");
+}
+
+
 body {
+	font-family: mainFont;
+	height:100%;
 	/***  CSS Gradient  ***/
   /*  Chrome 1-9 and Safari 4-5.0  */
   background-image: -webkit-gradient(linear, left top, left bottom,
@@ -43,7 +56,7 @@ body {
 	min-width:200px;
 	
 	margin-left: 50%;
-	margin-top:200px;
+	margin-top:20%;
 	border-radius: 5px;
 	transform: translate(-50%, -50%);
 	-webkit-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
@@ -53,7 +66,8 @@ body {
 
 #centerBox h3 {
 	text-align: center;
-    transform: translate(0px, -50px);
+	font-family: titleFont;
+    /*transform: translate(0px, -50px);*/
 }
 
 input[type=text], select {
@@ -64,6 +78,10 @@ input[type=text], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+}
+
+input, select, textarea, button{
+	font-family:inherit;
 }
 
 input[type=submit] {
