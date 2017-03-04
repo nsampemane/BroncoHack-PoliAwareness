@@ -44,7 +44,11 @@
 		}
 	
 		function search() {
-			console.log("Search");
+			var billNum = document.getElementById("bill").value;
+			var day = document.getElementById("day").value;
+			var county = document.getElementById("county").value;
+			
+			console.log("Search for:", billNum, day, county);
 			transitionOut();
 		}
 	
