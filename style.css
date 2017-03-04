@@ -108,6 +108,7 @@ input, select, textarea, button{
 input[type=submit] {
     margin-left: 50%;
     transform: translate(50%, 0%);
+    min-width: 200px;
     width: 25vw;
     background-color: #4CAF50;
     color: white;
