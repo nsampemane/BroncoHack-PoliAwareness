@@ -54,6 +54,15 @@ body {
         #ffffff );
 }
 
+hr {
+  height: 3px;
+  background-color: #ecbb59;
+  border: none;
+    border-radius: 5px;
+  width: 20%;
+
+}
+
 #centerBox {
 	position: fixed;
 
@@ -76,6 +85,7 @@ body {
 	text-align: center;
 	font-family: titleFont;
   margin-top: 5px;
+  margin-bottom: 0px;
   font-size: 5vh;
     /*transform: translate(0px, -50px);*/
 }
