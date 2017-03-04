@@ -1,12 +1,12 @@
 @font-face {
     font-family: fillFont;
-    src: url("Fonts/OstrichSans-Light.otf");
+    src: url("Fonts/GOTHIC.TTF");
     font-size: 50vh;
 }
 
 @font-face {
 	font-family: mainFont;
-    src: url("Fonts/OstrichSans-Medium.otf");
+    src: url("Fonts/GOTHIC.TTF");
     font-size: 50vh;
 }
 
