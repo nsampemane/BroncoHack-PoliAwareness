@@ -1,16 +1,19 @@
 @font-face {
     font-family: fillFont;
     src: url("Fonts/OstrichSans-Light.otf");
+    font-size: 50vh;
 }
 
 @font-face {
 	font-family: mainFont;
     src: url("Fonts/OstrichSans-Medium.otf");
+    font-size: 50vh;
 }
 
 @font-face {
 	font-family: titleFont;
     src: url("Fonts/OstrichSans-Medium.otf");
+    font-size: 50vh;
 }
 
 
@@ -54,6 +57,7 @@ body {
 	padding:5px;
 	width: 20%;
 	min-width:200px;
+  font-size: 3.5vh;
 	
 	margin-left: 50%;
 	margin-top:20%;
@@ -67,6 +71,7 @@ body {
 #centerBox h3 {
 	text-align: center;
 	font-family: titleFont;
+  margin-top: 5px;
     /*transform: translate(0px, -50px);*/
 }
 
@@ -78,6 +83,7 @@ input[type=text], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-size: 2vh;
 }
 
 input, select, textarea, button{
