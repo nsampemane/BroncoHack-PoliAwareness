@@ -1,0 +1,113 @@
+<html>
+<style>
+
+@font-face {
+    font-family: fillFont;
+    src: url("fonts/OstrichSans-Light.otf");
+}
+
+body {
+	/***  CSS Gradient  ***/
+  /*  Chrome 1-9 and Safari 4-5.0  */
+  background-image: -webkit-gradient(linear, left top, left bottom,
+        color-stop( 0.0, #ecbb59 ),
+        color-stop( 1.0, #ffffff ));
+
+  /*  Chrome 10+ Safari 5.1+ Mobile Safari  */
+  background-image: -webkit-linear-gradient(top,
+        #ecbb59, 
+        #ffffff );
+
+  /*  Firefox 3.6+  */
+  background-image: -moz-linear-gradient(top,
+        #ecbb59, 
+        #ffffff );
+
+  /*  IE 10+  */
+  background-image: -ms-linear-gradient(top,
+        #ecbb59, 
+        #ffffff );
+
+  /*  Opera 11.10+  */
+  background-image: -o-linear-gradient(top,
+        #ecbb59, 
+        #ffffff );
+
+  /*  W3C  */
+  background-image: linear-gradient(top,
+        #ecbb59, 
+        #ffffff );
+}
+
+#centerBox {
+	background-color:#fff;
+	padding:5px;
+	width: 20%;
+	min-width:200px;
+	
+	margin-left: 50%;
+	margin-top:200px;
+	border-radius: 5px;
+	transform: translate(-50%, -50%);
+	-webkit-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
+}
+
+#centerBox h3 {
+	text-align: center;
+    transform: translate(0px, -50px);
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+
+</style>
+<body>
+<div>
+		
+		<form id="centerBox" action="/action_page.php">
+			<h3>
+				VoteCA
+			</h3>
+			<label for="fname">First Name</label>
+			<input type="text" id="fname" name="firstname" placeholder="Your name..">
+
+			<label for="lname">Last Name</label>
+			<input type="text" id="lname" name="lastname" placeholder="Your last name..">
+
+			<label for="country">Country</label>
+			<select id="country" name="country">
+			  <option value="australia">Australia</option>
+			  <option value="canada">Canada</option>
+			  <option value="usa">USA</option>
+			</select>
+  
+			<input type="submit" value="Submit">
+		</form>
+</div>
+</body>
+</html>
