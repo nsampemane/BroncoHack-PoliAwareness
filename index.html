@@ -23,7 +23,7 @@
     <div id="firstBox">
 		<form id="centerBox" action="javascript:void(0);">
 			<!-- hidden button -->
-			<input type="submit" class="defaultsink" onclick="search()" />
+			<input type="submit" class="defaultsink" onclick="otherSearch()" />
 			<h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
 			<input type="submit" value="Recently Updated" onclick="upcoming()" />
 			<h3>- OR -</h3>
@@ -33,7 +33,7 @@
 
 			<label for="day">Date of Last Action</label><br>
 			<input type="date" id="day" name="day" min="1970-01-01" required ><br>
-			<input type="submit" value="Search" onclick="search()" tabindex="0">
+			<input type="submit" value="Search" onclick="otherSearch()" tabindex="0">
 		</form>
 	</div>
 		
@@ -91,34 +91,65 @@
 		
 		var dictionary = getDictionary(test);
 		
-		function getSortedBills(jsession)
-	{
-		var times= {};
-		var ids = [];
-		for (var key in jsession.masterlist)
-		{	
-			
-			if (isNaN(key))
-			{
-				continue; //skips over non-number at end
-			}
-			var id = jsession.masterlist[key].bill_id;
-			
-			var date = new Date(jsession.masterlist[key].last_action_date);
-			
-			dateInMs = date.getTime();
-			times[id] = dateInMs;
-			ids.push(id);
-			
-			//document.write( id+ " : " + times[id] + "<br>");
-		
-		}
-		
-		ids.sort(function(a, b){return times[b]-times[a]}); //a-b ascending b-a ascending
-		return ids;
+		function getSortedBills(jsession,day = null)
+    {
+      var times= {};
+      var ids = [];
+      for (var key in jsession.masterlist)
+      { 
+        
+        if (isNaN(key))
+        {
+          continue; //skips over non-number at end
+        }
+        var datestring = jsession.masterlist[key].last_action_date;
+        var id = jsession.masterlist[key].bill_id;
+        if (day!= null && day!= datestring)
+        {
+          continue; //skips over if date is provided and not current
+        }
+        var date = new Date(datestring);
+        
+        dateInMs = date.getTime();
+        times[id] = dateInMs;
+        ids.push(id);
+        
+        //document.write( id+ " : " + times[id] + "<br>");
+      
+      }
+    
+    ids.sort(function(a, b){return times[b]-times[a]}); //a-b ascending b-a ascending
+    return ids;
 
-	}
+  }
 	
+  function isUpcoming(billID)
+  {
+      
+    info= getBill(billID);
+    if (info.bill.status <=3)
+    {
+      return true;
+    }
+    return false;
+      
+  }
+
+  function getTags(jbill)
+  {
+
+    var toadd = {};
+    var hislength = jbill.bill.history.length;
+    toadd["id"] = jbill.bill.bill_id;
+    toadd["date"] = jbill.bill.history[hislength-1].date;
+    toadd["description"] = jbill.bill.description;
+    toadd["action"] = jbill.bill.history[hislength-1].action;
+    toadd["number"] = jbill.bill.bill_number;
+    toadd["title"] = jbill.bill.title;
+    return toadd;
+
+  }
+
 	function getDocNumber(billNumber)
 	{
 	    
@@ -127,42 +158,18 @@
 	    return docNumber;
 	}
 	
-	function getUpcoming(target = 10)
+	function getUpcoming(target = 10,datestring = null)
   { 
-    var count = 0;
-    function isUpcoming(billID)
-    {
-      
-      info= getBill(billID);
-      if (info.bill.status <=3)
-      {
-        return true;
-      }
-      return false;
-      
-    }
-    
-        var sortedBills = getSortedBills(test);
-    
-        var output= [];
-    
+    var count = 0;    
+        var sortedBills = getSortedBills(test,datestring);    
+        var output= [];   
     for (var item in sortedBills)
-    {
-      
+    {     
       if (isUpcoming(sortedBills[item]))
       {
-        count++
-        
-        jbill = getBill(sortedBills[item]);
-        var toadd = {};
-        var hislength = jbill.bill.history.length;
-        toadd["id"] = sortedBills[item]; //from above
-        toadd["date"] = jbill.bill.history[hislength-1].date;
-        toadd["description"] = jbill.bill.description;
-        toadd["action"] = jbill.bill.history[hislength-1].action;
-        toadd["number"] = jbill.bill.bill_number;
-        toadd["title"] = jbill.bill.title;
-        output.push(toadd);
+        count++;        
+        jbill = getBill(sortedBills[item]);       
+        output.push(getTags(jbill));
         
       }
       if (count >= target)
@@ -175,6 +182,7 @@
     
       return output;
   }
+  
 	function getBill(billNumber)
 	{
 		
@@ -208,7 +216,7 @@
 			presentList();
 		}
 	
-		function search(x = null) {
+		function otherSearch(x = null) {
 			var billNum;
       if(x!=null) {
         billNum = x;
@@ -223,16 +231,18 @@
 			}
 			console.log("Search for:", billNum, day);
 			
-			if (billNum != "" || day != "") {
-				if(dictionary[billNum] == undefined && day == "") {
-					alert("Invalid bill, you bitch. Also, fuck you, and have a blessed day");
-				} else {
-					transitionOut(current);
-					if (billNum != "") {
-						specificBill();
-					}
-				}
-			}	
+      if(billNum != "") {
+        if(dictionary[billNum] == undefined) {
+          alert("Invalid bill, you bitch. Also, fuck you, and have a blessed day");
+        } else {
+          transitionOut(current);
+          specificBill();
+        }
+      } else {
+        transitionOut(current);
+        fillUpcoming(10, day);
+        presentList();
+      }
 		}
 		
 		function boldHTML(x) {
@@ -244,7 +254,8 @@
     function linkHTML(x, num) {
       var element = document.createElement("a");
       console.log(num)
-      element.setAttribute('onclick', 'search('+num+'); return false;');
+      element.setAttribute('onclick', "otherSearch('"+num+"'); return false;");
+      element.setAttribute('href', 'javascript:void(0);');
       element.innerHTML = x;
       console.log(element);
       return element;
@@ -252,8 +263,8 @@
 
 
 		// Bill
-    function fillUpcoming(x) {
-		var list = getUpcoming(20);
+    function fillUpcoming(x, date = null) {
+		var list = getUpcoming(20, date);
 
     var body = document.getElementsByTagName('body')[0];
     var tbl = document.createElement('table');
@@ -303,34 +314,6 @@
     tbl.appendChild(tbdy);
     var el = document.getElementById("list");
     el.appendChild(tbl);
-
-      /*var el = document.getElementById("list");
-			el.innerHTML = "";
-			for(var i = 0; i<x ; i++) {
-				var node = document.createElement("li");
-				var link = document.createElement("table");
-        link.setAttribute("id", "myTable" + i);
-        el.appendChild(link);
-				
-        var y = document.createElement("TR");
-        y.setAttribute("id", "myTr");
-        document.getElementById("myTable").appendChild(y);
-
-        var w = document.createElement("TR");
-        w.setAttribute("id", "myTr");
-        document.getElementById("myTable").appendChild(w);
-
-        var z = document.createElement("TH");
-        var t = document.createTextNode("cell");
-        z.appendChild(t);
-        document.getElementById("myTr").appendChild(z);
-
-        link.innerText = "Hi";
-				
-				link.setAttribute("onclick", "clickedBill();");
-				node.appendChild(link);
-				el.appendChild(node);
-			}	*/
 		}
 		
 		function clickedBill(x) {
