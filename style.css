@@ -116,7 +116,8 @@ hr {
 	height: 80vh;
 	line-height: 1.5;
 	text-align: center;
-	margin-left: 10vw;
+	margin-left: 50vw;
+	transform: translate(-50%, 0%);
 	margin-right:10vw;
 	margin-top:5vh;
 	margin-bottom:5vh;
