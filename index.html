@@ -21,22 +21,21 @@
 	<body>
 		<!-- Main Screen -->
     <div id="firstBox">
-			<form id="centerBox" class="fade-in" action="javascript:void(0);">
-				<!-- hidden button -->
-        <input type="submit" class="defaultsink" onclick="search()" />
-        <h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
-        <input type="submit" value="Upcoming" onclick="upcoming()" />
-        <h3>- OR -</h3>
+		<form id="centerBox" action="javascript:void(0);">
+			<!-- hidden button -->
+			<input type="submit" class="defaultsink" onclick="search()" />
+			<h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
+			<input type="submit" value="Upcoming" onclick="upcoming()" />
+			<h3>- OR -</h3>
 
-        <label for="bill">Bill Number <span style="color:#a8a8a8;">(SB#, AB#, ACR#, etc...)</span></label>
-				<input type="text" id="bill" name="firstname" placeholder="Number...">
+			<label for="bill">Bill Number <span style="color:#a8a8a8;">(SB#, AB#, ACR#, etc...)</span></label>
+			<input type="text" id="bill" name="firstname" placeholder="Number...">
 
-        <label for="day">Date of Last Action</label><br>
-				<input type="date" id="day" name="day" min="1970-01-01" required ><br>
-
-				<input type="submit" value="Search" onclick="search()" tabindex="0">
-			</form>
-		</div>
+			<label for="day">Date of Last Action</label><br>
+			<input type="date" id="day" name="day" min="1970-01-01" required ><br>
+			<input type="submit" value="Search" onclick="search()" tabindex="0">
+		</form>
+	</div>
 		
 
     <!-- Blank Box -->
@@ -60,6 +59,7 @@
 	
 
 	<script>
+	transitionOut(document.getElementById("thirdBox"));
     // Dictionary
     var key = "d09ad1beb3b885847a39492a0f66987d";
     var url = "https://api.legiscan.com/?key=" + key + "&op=";
@@ -368,15 +368,20 @@
 		function transitionOut(x) {
 			x.classList.add("translateOut");
 			x.style.opacity="0";
+			x.style.zIndex = "0";
+			
 		}
 		
 		function backToMain() {
 			transitionOut(current);
 			var firstBox = document.getElementById("firstBox");
 			current = firstBox;
+			var old = document.getElementById("thirdBox");
+			old.style.zIndex = "0";
 			setTimeout(function(){
 				current.classList.remove("translateOut");
 				current.classList.add("fade-in");
+				current.style.zIndex = "500";
 			}, 500); 
 			
 			document.getElementById("back").style.opacity = 0;

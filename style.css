@@ -108,8 +108,8 @@ hr {
   -webkit-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
-  opacity: 0;
-  z-index: 100
+  opacity: 1;
+  z-index: 200
 }
 
 #thirdBox {
@@ -132,8 +132,8 @@ hr {
 	-webkit-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
 	-moz-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
 	box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
-	opacity: 0;
-	z-index:200;
+	opacity: 1;
+	z-index:100 !important;
 }
 
 #thirdBox li {
@@ -145,6 +145,7 @@ hr {
 }
 
 #centerBox {
+	transform-style:preserve-3d;
 	position:absolute;
 	overflow: hidden;
 	background-color:#fff;
@@ -161,6 +162,7 @@ hr {
 	-moz-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
 	box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
 	z-index: 10000;
+	opacity:0.99;
 }
 
 #back {
@@ -234,8 +236,10 @@ input[type=submit]:hover {
 	-ms-transition: 2s;
 	-o-transition: 2s;
 	transition: 2s;
-	margin-left: 200% !important;
-	opacity:0;
+	margin-left: 300% !important;
+	margin-right: -300% !important;
+	z-index:0 !important;
+	opacity:1;
 }
 
 #secondBox.translateOut {
@@ -246,7 +250,8 @@ input[type=submit]:hover {
 	transition: 2s;
 	margin-left: 300% !important;
 	margin-right: -300% !important;
-	opacity:0;
+	z-index:0 !important;
+	opacity:1;
 }
 
 #thirdBox.translateOut {
@@ -257,7 +262,8 @@ input[type=submit]:hover {
 	transition: 2s;
 	margin-left: 300% !important;
 	margin-right: -300% !important;
-	opacity:0;
+	z-index:0 !important;
+	opacity:1;
 }
 
 
