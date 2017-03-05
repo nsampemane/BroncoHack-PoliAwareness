@@ -233,12 +233,12 @@
 			
 			  if(billNum != "") {
 				if(dictionary[billNum] == undefined) {
-				  alert("Invalid bill, you bitch. Also, fuck you, and have a blessed day");
+				  alert("Invalid bill format");
 				} else {
 				  transitionOut(current);
 				  specificBill(x);
 				}
-			  } else {
+			  } else if (day != "") {
 				transitionOut(current);
 				fillUpcoming(10, day);
 				presentList();
