@@ -232,17 +232,20 @@
 					}
 					console.log("Search for:", billNum, day);
 			
-			  if(billNum != "" && day == "") {
+			  if(billNum != "" && day == "" && x==null) {
 				if(dictionary[billNum] == undefined) {
 				  alert("Invalid bill format");
 				} else {
 				  transitionOut(current);
 				  specificBill(x);
 				}
-			  } else {
+			  } else if (billNum == "" && day != "" && x==null) {
 				transitionOut(current);
 				fillUpcoming(10, day);
 				presentList();
+			  } else {
+			  		transitionOut(current);
+				  specificBill(x);
 			  }
 		}
 		

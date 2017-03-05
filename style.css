@@ -267,6 +267,10 @@ input[type=date]:invalid::-webkit-datetime-edit {
     color: #a8a8a8;
 }
 
+.ws-popover {
+	z-index:99999;
+}
+
 input, select, textarea, button{
 	font-family:inherit;
 }
