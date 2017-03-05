@@ -1,0 +1,25 @@
+<!DOCType HTML>
+<html>
+<head>
+<title>Testing JavaScript</title>
+</head>
+<body>
+<script type="text/javascript">
+var key = "d09ad1beb3b885847a39492a0f66987d";
+var url = "https://api.legiscan.com/?key=" + key + "&op=";
+var xhr = new XMLHttpRequest();
+xhr.open("GET", url + "getMasterList&id=1400", false);
+xhr.send();
+var test= JSON.parse(xhr.responseText);
+var i=0;
+var masterlist = {};
+var temp;
+while(test.masterlist[i].bill_id > 0)
+{
+	document.write(test.masterlist[i].bill_id)
+	masterlist[test.masterlist[i].id] = test.masterlist[i];
+	i++;
+}
+</script>
+</body>
+</html>
