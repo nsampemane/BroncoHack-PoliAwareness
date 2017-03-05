@@ -91,34 +91,65 @@
 		
 		var dictionary = getDictionary(test);
 		
-		function getSortedBills(jsession)
-	{
-		var times= {};
-		var ids = [];
-		for (var key in jsession.masterlist)
-		{	
-			
-			if (isNaN(key))
-			{
-				continue; //skips over non-number at end
-			}
-			var id = jsession.masterlist[key].bill_id;
-			
-			var date = new Date(jsession.masterlist[key].last_action_date);
-			
-			dateInMs = date.getTime();
-			times[id] = dateInMs;
-			ids.push(id);
-			
-			//document.write( id+ " : " + times[id] + "<br>");
-		
-		}
-		
-		ids.sort(function(a, b){return times[b]-times[a]}); //a-b ascending b-a ascending
-		return ids;
+		function getSortedBills(jsession,day = null)
+    {
+      var times= {};
+      var ids = [];
+      for (var key in jsession.masterlist)
+      { 
+        
+        if (isNaN(key))
+        {
+          continue; //skips over non-number at end
+        }
+        var datestring = jsession.masterlist[key].last_action_date;
+        var id = jsession.masterlist[key].bill_id;
+        if (day!= null && day!= datestring)
+        {
+          continue; //skips over if date is provided and not current
+        }
+        var date = new Date(datestring);
+        
+        dateInMs = date.getTime();
+        times[id] = dateInMs;
+        ids.push(id);
+        
+        //document.write( id+ " : " + times[id] + "<br>");
+      
+      }
+    
+    ids.sort(function(a, b){return times[b]-times[a]}); //a-b ascending b-a ascending
+    return ids;
 
-	}
+  }
 	
+  function isUpcoming(billID)
+  {
+      
+    info= getBill(billID);
+    if (info.bill.status <=3)
+    {
+      return true;
+    }
+    return false;
+      
+  }
+
+  function getTags(jbill)
+  {
+
+    var toadd = {};
+    var hislength = jbill.bill.history.length;
+    toadd["id"] = jbill.bill.bill_id;
+    toadd["date"] = jbill.bill.history[hislength-1].date;
+    toadd["description"] = jbill.bill.description;
+    toadd["action"] = jbill.bill.history[hislength-1].action;
+    toadd["number"] = jbill.bill.bill_number;
+    toadd["title"] = jbill.bill.title;
+    return toadd;
+
+  }
+
 	function getDocNumber(billNumber)
 	{
 	    
@@ -127,42 +158,18 @@
 	    return docNumber;
 	}
 	
-	function getUpcoming(target = 10)
+	function getUpcoming(target = 10,datestring = null)
   { 
-    var count = 0;
-    function isUpcoming(billID)
-    {
-      
-      info= getBill(billID);
-      if (info.bill.status <=3)
-      {
-        return true;
-      }
-      return false;
-      
-    }
-    
-        var sortedBills = getSortedBills(test);
-    
-        var output= [];
-    
+    var count = 0;    
+        var sortedBills = getSortedBills(test,datestring);    
+        var output= [];   
     for (var item in sortedBills)
-    {
-      
+    {     
       if (isUpcoming(sortedBills[item]))
       {
-        count++
-        
-        jbill = getBill(sortedBills[item]);
-        var toadd = {};
-        var hislength = jbill.bill.history.length;
-        toadd["id"] = sortedBills[item]; //from above
-        toadd["date"] = jbill.bill.history[hislength-1].date;
-        toadd["description"] = jbill.bill.description;
-        toadd["action"] = jbill.bill.history[hislength-1].action;
-        toadd["number"] = jbill.bill.bill_number;
-        toadd["title"] = jbill.bill.title;
-        output.push(toadd);
+        count++;        
+        jbill = getBill(sortedBills[item]);       
+        output.push(getTags(jbill));
         
       }
       if (count >= target)
@@ -175,6 +182,7 @@
     
       return output;
   }
+  
 	function getBill(billNumber)
 	{
 		
@@ -232,7 +240,7 @@
         }
       } else {
         transitionOut(current);
-        fillUpcoming(10);
+        fillUpcoming(10, day);
         presentList();
       }
 		}
@@ -254,8 +262,8 @@
 
 
 		// Bill
-    function fillUpcoming(x) {
-		var list = getUpcoming(20);
+    function fillUpcoming(x, date = null) {
+		var list = getUpcoming(20, date);
 
     var body = document.getElementsByTagName('body')[0];
     var tbl = document.createElement('table');
