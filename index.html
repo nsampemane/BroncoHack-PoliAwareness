@@ -124,11 +124,10 @@
 	    
 	    var test= getBill(billNumber);
 	    var docNumber= test.bill.texts[test.bill.texts.length-1].doc_id; //test.bill.texts is an array so gets current version (last item in x)
-	    document.write(docNumber);
 	    return docNumber;
 	}
 	
-	function upcoming(target = 10)
+	function getUpcoming(target = 10)
 	{	
 		var count = 0;
 		function isUpcoming(billID)
@@ -234,7 +233,9 @@
 
 		// Bill
     function fillUpcoming(x) {
-		var body = document.getElementsByTagName('body')[0];
+		var list = getUpcoming(10);
+
+    var body = document.getElementsByTagName('body')[0];
     var tbl = document.createElement('table');
     tbl.setAttribute('style', 'border-color: #ffffff')
     
@@ -247,14 +248,14 @@
     tbl.setAttribute('border', '0');
     tbl.setAttribute('style', 'border-collapse: collapse; border-color: #ffffff; width: 100%; text-align: left');
     var tbdy = document.createElement('tbody');
-    for(var j = 0; j <4; j++) {
+    for(var j = 0; j < 10; j++) {
       //Title
       var title = document.createElement('tr');
       title.setAttribute('style', 'border-color: #ffffff')
       var titleData = document.createElement('td');
       titleData.setAttribute("colSpan", "2");
       title.setAttribute('style', 'border-color: #ffffff; font-size: 20px; font-weight: bold')
-      titleData.appendChild(document.createTextNode('' + name))
+      titleData.appendChild(document.createTextNode(list[j]['number'] + ' - ' + list[j]['title']))
       title.appendChild(titleData)
       tbdy.appendChild(title);
 
@@ -266,9 +267,9 @@
       var action = document.createElement('td');
       action.setAttribute('style', 'border-color: #ffffff; font-size: 15px')
       date.appendChild(boldHTML('Date: '))
-      date.appendChild(document.createTextNode(dateData))
-      action.appendChild(boldHTML('Action: '))
-      action.appendChild(document.createTextNode(actionData))
+      date.appendChild(document.createTextNode(list[j]["date"]))
+      action.appendChild(boldHTML('Latest Action: '))
+      action.appendChild(document.createTextNode(list[j]['action']))
       dateAction.appendChild(date)
       dateAction.appendChild(action)
       tbdy.appendChild(dateAction);
@@ -279,8 +280,8 @@
       var descData = document.createElement('td');
       descData.setAttribute("colSpan", "2");
       descData.setAttribute("style", "font-size: 15px; padding-bottom: 25px")
-      descData.appendChild(boldHTML('Desc: '))
-      descData.appendChild(document.createTextNode(descStuff))
+      descData.appendChild(boldHTML('Description: '))
+      descData.appendChild(document.createTextNode(list[j]['description']))
       desc.appendChild(descData)
       tbdy.appendChild(desc);
   }
