@@ -25,7 +25,7 @@
 			<!-- hidden button -->
 			<input type="submit" class="defaultsink" onclick="search()" />
 			<h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
-			<input type="submit" value="Upcoming" onclick="upcoming()" />
+			<input type="submit" value="Recently Updated" onclick="upcoming()" />
 			<h3>- OR -</h3>
 
 			<label for="bill">Bill Number <span style="color:#a8a8a8;">(SB#, AB#, ACR#, etc...)</span></label>
@@ -128,51 +128,53 @@
 	}
 	
 	function getUpcoming(target = 10)
-	{	
-		var count = 0;
-		function isUpcoming(billID)
-		{
-			
-			info= getBill(billID);
-			if (info.bill.status <=3)
-			{
-				return true;
-			}
-			return false;
-			
-		}
-		
+  { 
+    var count = 0;
+    function isUpcoming(billID)
+    {
+      
+      info= getBill(billID);
+      if (info.bill.status <=3)
+      {
+        return true;
+      }
+      return false;
+      
+    }
+    
         var sortedBills = getSortedBills(test);
-		
+    
         var output= [];
-		
-		for (var item in sortedBills)
-		{
-			sortedBills[sortedBills[item]]
-			if (isUpcoming(sortedBills[item]))
-			{
-				count++
-				//upcomingList.push(sortedBills[item]);
-				jbill = getBill(sortedBills[item]);
-				var toadd = {};
-				toadd["id"] = sortedBills[item]; //from above
-				toadd["date"] = jbill.bill.history[history.length-1].date;
-				toadd["description"] = jbill.bill.description;
-				toadd["action"] = jbill.bill.history[history.length-1].action;
-				toadd["number"] = jbill.bill.bill_number;
-				toadd["title"] = jbill.bill.title;
-				output.push(toadd);
-			}
-			if (count >= target)
-			{
-				break;
-			}
-		
-		}
-		
-		
-	    return output;
-	}
+    
+    for (var item in sortedBills)
+    {
+      
+      if (isUpcoming(sortedBills[item]))
+      {
+        count++
+        
+        jbill = getBill(sortedBills[item]);
+        var toadd = {};
+        var hislength = jbill.bill.history.length;
+        toadd["id"] = sortedBills[item]; //from above
+        toadd["date"] = jbill.bill.history[hislength-1].date;
+        toadd["description"] = jbill.bill.description;
+        toadd["action"] = jbill.bill.history[hislength-1].action;
+        toadd["number"] = jbill.bill.bill_number;
+        toadd["title"] = jbill.bill.title;
+        output.push(toadd);
+        
+      }
+      if (count >= target)
+      {
+        break;
+      }
+    
+    }
+    
+    
+      return output;
+  }
 	function getBill(billNumber)
 	{
 		
@@ -202,8 +204,9 @@
 		
 		function upcoming() {
 			transitionOut(current);
+      presentList();
 			fillUpcoming(10);
-			presentList();
+			
 		}
 	
 		function search() {
@@ -237,22 +240,17 @@
 
 		// Bill
     function fillUpcoming(x) {
-		var list = getUpcoming(10);
+		var list = getUpcoming(20);
 
     var body = document.getElementsByTagName('body')[0];
     var tbl = document.createElement('table');
     tbl.setAttribute('style', 'border-color: #ffffff')
-    
-    var name = "SB173 - Real Estate BITCH"
-    var dateData = '2007-01-01'
-    var actionData = 'Read in congress'
-    var descStuff = 'Existing law establishes in state government the Business, Consumer Services, and Housing Agency, which is comprised of various departments including the Department of Consumer Affairs. Existing law establishes the Bureau of Real Estate within the Department of Consumer Affairs to license and regulate real estate brokers and real estate salespersons.This bill would remove the bureau from the Department of Consumer Affairs and instead make it a department within the Business, Consumer Services, and Housing Agency and rename the bureau to the Department of Real Estate. The bill would also make other conforming changes.'
 
     tbl.style.width = '100%';
     tbl.setAttribute('border', '0');
     tbl.setAttribute('style', 'border-collapse: collapse; border-color: #ffffff; width: 100%; text-align: left');
     var tbdy = document.createElement('tbody');
-    for(var j = 0; j < 10; j++) {
+    for(var j = 0; j < 20; j++) {
       //Title
       var title = document.createElement('tr');
       title.setAttribute('style', 'border-color: #ffffff')
@@ -270,7 +268,7 @@
       date.setAttribute('style', 'border-color: #ffffff; font-size: 15px')
       var action = document.createElement('td');
       action.setAttribute('style', 'border-color: #ffffff; font-size: 15px')
-      date.appendChild(boldHTML('Date: '))
+      date.appendChild(boldHTML('Last Action Date: '))
       date.appendChild(document.createTextNode(list[j]["date"]))
       action.appendChild(boldHTML('Latest Action: '))
       action.appendChild(document.createTextNode(list[j]['action']))
