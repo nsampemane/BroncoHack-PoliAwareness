@@ -55,21 +55,24 @@
 			<h3>
 				<span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span>
 			</h3>
-			<script type="text/javascript">
-			var key = "d09ad1beb3b885847a39492a0f66987d";
-			var url = "https://api.legiscan.com/?key=" + key + "&op=";
-			var xhr = new XMLHttpRequest();
-			xhr.open("GET", url + "getBillText&id=1439185", false);
-			xhr.send();
-			testyj = JSON.parse(xhr.responseText);
-			document.write(atob(testyj.text.doc));
-			</script>
+			<div id="text">
+			</div>
 		</div>
 		<input type="submit" id="back" value="Back" onclick="backToMain()" disabled/>
 		
 	</body>
 	
 	<script>
+	//1439185
+		function fillBillInfo(x) {
+			var key = "d09ad1beb3b885847a39492a0f66987d";
+			var url = "https://api.legiscan.com/?key=" + key + "&op=";
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url + "getBillText&id="+x, false);
+			xhr.send();
+			testyj = JSON.parse(xhr.responseText);
+			document.getElementById("text").innerHTML = atob(testyj.text.doc);
+		}
 	
 		var current =  document.getElementById("firstBox");
 		function upcoming() {
@@ -93,11 +96,11 @@
 				if (billNum != "") {
 					specificBill();
 				}
-			}
-			
+			}	
 		}
 		
 		function specificBill() {
+			fillBillInfo("1439185");
 			var boxTwo = document.getElementById("secondBox");
 			current = boxTwo;
 			setTimeout(function(){
@@ -106,7 +109,6 @@
 				document.getElementById("back").style.opacity = 1;
 				document.getElementById("back").disabled = false;
 			}, 500); 
-			
 		}
 	
 		function transitionOut(x) {
