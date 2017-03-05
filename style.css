@@ -167,6 +167,7 @@ input[type=submit]:hover {
 	opacity:0;
 }
 
+/* Fade in Animations */
 
 @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
 @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
