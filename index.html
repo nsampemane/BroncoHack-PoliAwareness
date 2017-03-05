@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 
 <html>
   <head>
@@ -23,7 +23,7 @@
     <div id="firstBox">
 		<form id="centerBox" action="javascript:void(0);">
 			<!-- hidden button -->
-			<input type="submit" class="defaultsink" onclick="search()" />
+			<input type="submit" class="defaultsink" onclick="otherSearch()" />
 			<h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
 			<input type="submit" value="Recently Updated" onclick="upcoming()" />
 			<h3>- OR -</h3>
@@ -33,7 +33,7 @@
 
 			<label for="day">Date of Last Action</label><br>
 			<input type="date" id="day" name="day" min="1970-01-01" required ><br>
-			<input type="submit" value="Search" onclick="search()" tabindex="0">
+			<input type="submit" value="Search" onclick="otherSearch()" tabindex="0">
 		</form>
 	</div>
 		
@@ -208,13 +208,15 @@
 			presentList();
 		}
 	
-		function search(x = null) {
+		/*function search(x) {
 			var billNum;
-      if(x!=null) {
-        billNum = x;
-      } else {
-        billNum = document.getElementById("bill").value;
-      }
+			console.log(x.toString());
+			  if(x!=null) {
+		
+				billNum = x;
+			  } else {
+				billNum = document.getElementById("bill").value;
+			  }
 			var day;
 			if (document.getElementById("day") != null) {
 				day = document.getElementById("day").value;
@@ -233,6 +235,35 @@
 					}
 				}
 			}	
+		}*/
+		
+		function otherSearch(x) {
+			var billNum;
+			
+			  if(x!=null) {
+		
+				billNum = x;
+			  } else {
+				billNum = document.getElementById("bill").value;
+			  }
+			var day;
+			if (document.getElementById("day") != null) {
+				day = document.getElementById("day").value;
+			} else {
+				day = null;
+			}
+			console.log("Search for:", billNum, day);
+			
+			if (billNum != "" || day != "") {
+				if(dictionary[billNum] == undefined && day == "") {
+					alert("Invalid bill, you bitch. Also, fuck you, and have a blessed day");
+				} else {
+					transitionOut(current);
+					if (billNum != "") {
+						specificBill(x);
+					}
+				}
+			}	
 		}
 		
 		function boldHTML(x) {
@@ -241,12 +272,13 @@
       return element;
     }
 
-    function linkHTML(x, num) {
+    function linkHTML(x, num2) {
       var element = document.createElement("a");
-      console.log(num)
-      element.setAttribute('onclick', 'search('+num+'); return false;');
+      //console.log(num)
+      //into = num.toString();
+      element.setAttribute('onClick', "otherSearch('"+num2+"'); return false;");
+      element.setAttribute("href", "javascript:void(0);");
       element.innerHTML = x;
-      console.log(element);
       return element;
     }
 
@@ -269,8 +301,13 @@
       title.setAttribute('style', 'border-color: #ffffff')
       var titleData = document.createElement('td');
       titleData.setAttribute("colSpan", "2");
-      title.setAttribute('style', 'border-color: #ffffff; font-size: 20px; font-weight: bold')
-      titleData.appendChild(document.createTextNode(list[j]['number'] + ' - ' + linkHTML(list[j]['title'], list[j]['number'])))
+      title.setAttribute('style', 'border-color: #ffffff; font-size: 20px; font-weight: bold');
+      
+      var htmlStr = linkHTML(list[j]['title'], list[j]['number']);
+      console.log(htmlStr);
+      
+      titleData.appendChild(document.createTextNode(list[j]['number'] + ' - '));
+      titleData.appendChild(linkHTML(list[j]['title'], list[j]['number']));
       title.appendChild(titleData)
       tbdy.appendChild(title);
 
@@ -348,9 +385,15 @@
 		}
 	
 	// Transitions
-		function specificBill() {
-			var billNum = document.getElementById("bill").value;
+		function specificBill(x) {
+			var billNum;
 			
+			  if(x!=null) {
+		
+				billNum = x;
+			  } else {
+				billNum = document.getElementById("bill").value;
+			  }
 			console.log(billNum);
 			console.log(dictionary[billNum]);
 			fillBillInfo(dictionary[billNum]);
