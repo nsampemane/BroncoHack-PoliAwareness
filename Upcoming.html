@@ -1,0 +1,103 @@
+<!DOCType HTML>
+<html>
+<head>
+<title>Testing JavaScript</title>
+</head>
+<body>
+<script type="text/javascript">
+	var key = "d09ad1beb3b885847a39492a0f66987d";
+	var url = "https://api.legiscan.com/?key=" + key + "&op=";
+	var xhr = new XMLHttpRequest();
+	xhr.open("GET", url + "getMasterList&id=1400", false);
+	xhr.send();
+	var test= JSON.parse(xhr.responseText);
+
+	function getDictionary (jsession)
+	{
+		var dicty= {};
+		
+		for (var key in jsession.masterlist)
+		{	
+			if (isNaN(key))
+			{
+				continue; //skips over non-number at end
+			}
+			var id = jsession.masterlist[key].bill_id;
+			var number = jsession.masterlist[key].number;
+			dicty[number] = id;
+			
+			//document.write( number+ " : " + dicty[number] + "<br>");
+		
+		}
+		return dicty
+
+	}
+	function getSortedBills(jsession)
+	{
+		var times= {};
+		var ids = [];
+		for (var key in jsession.masterlist)
+		{	
+			
+			if (isNaN(key))
+			{
+				continue; //skips over non-number at end
+			}
+			var id = jsession.masterlist[key].bill_id;
+			
+			var date = new Date(jsession.masterlist[key].last_action_date);
+			
+			dateInMs = date.getTime();
+			times[id] = dateInMs;
+			ids.push(id);
+			
+			//document.write( id+ " : " + times[id] + "<br>");
+		
+		}
+		
+		ids.sort(function(a, b){return times[b]-times[a]}); //a-b ascending b-a ascending
+		return ids;
+
+	}
+	function getDocNumber(billNumber)
+	{
+	    var key = "d09ad1beb3b885847a39492a0f66987d";
+	    var url = "https://api.legiscan.com/?key=" + key + "&op=";
+	    var xhr = new XMLHttpRequest();
+	    xhr.open("GET", url + "getBill&id=" + billNumber, false);
+	    xhr.send();
+	    var test= JSON.parse(xhr.responseText);
+	    var docNumber= test.bill.texts[test.bill.texts.length-1].doc_id; //test.bill.texts is an array so gets current version (last item in x)
+	    document.write(docNumber);
+	    return docNumber;
+	}
+	function Upcoming
+	{
+        var List {} = getSortedBills(test);
+        var upcomingList {};
+        var billNumber;
+        var doc;
+        var i = 0;
+        var j= 0;
+	    while(List[i].bill_id !== null)
+	    {
+	        billNumber = upcomingList[i].masterlist[i].billNumber;
+	        doc = getDocNumber(billNumber);
+	        var xhr = new XMLHttpRequest();
+	        xhr.open("GET", url + "getBillText&id=" + doc, false);
+	        xhr.send();
+	        docinfo= JSON.parse(xhr.responseText);
+	        if(docinfo.bill.status <4)
+	        {
+	            upcomingList[j] = { docinfo.status_date , docinfo.title , docinfo.description}
+	            j++;
+	        }
+	        i++;
+            
+	    }
+	    return upcomingList{};
+	}
+
+</script>
+</body>
+</html>
