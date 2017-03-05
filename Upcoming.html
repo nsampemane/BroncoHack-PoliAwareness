@@ -67,7 +67,7 @@
 	    
 	    return docNumber;
 	}
-	function upcoming(target = 10)
+	function getUpcoming(target = 10)
 	{	
 		var count = 0;
 		function isUpcoming(billID)
@@ -93,16 +93,8 @@
 			{
 				count++
 				
-				jbill = getBill(sortedBills[item]);
-				var toadd = {};
-				var hislength = jbill.bill.history.length;
-				toadd["id"] = sortedBills[item]; //from above
-				toadd["date"] = jbill.bill.history[hislength-1].date;
-				toadd["description"] = jbill.bill.description;
-				toadd["action"] = jbill.bill.history[hislength-1].action;
-				toadd["number"] = jbill.bill.bill_number;
-				toadd["title"] = jbill.bill.title;
-				output.push(toadd);
+				jbill = getBill(sortedBills[item]);				
+				output.push(getTags(jbill));
 				
 			}
 			if (count >= target)
@@ -115,6 +107,20 @@
 		
 	    return output;
 	}
+	function getTags(jbill)
+	{
+
+		var toadd = {};
+		var hislength = jbill.bill.history.length;
+		toadd["id"] = jbill.bill.bill_id;
+		toadd["date"] = jbill.bill.history[hislength-1].date;
+		toadd["description"] = jbill.bill.description;
+		toadd["action"] = jbill.bill.history[hislength-1].action;
+		toadd["number"] = jbill.bill.bill_number;
+		toadd["title"] = jbill.bill.title;
+		return toadd;
+
+	}
 	function getBill(billNumber)
 	{
 		
@@ -123,10 +129,12 @@
 		req.send();
 		return JSON.parse(req.responseText);
 	}
+	
+	
 	//console.log(getBill(892574));
 	console.log(upcoming(20));
 	
-	
+	function getOnDay(
 
 </script>
 </body>
