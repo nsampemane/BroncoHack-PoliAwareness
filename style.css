@@ -289,6 +289,8 @@ input[type=submit]:hover {
     -webkit-animation-duration:1s;
     -moz-animation-duration:1s;
     animation-duration:1s;
+    
+    z-index:2000;
 }
 
 .fade-in.delay {
@@ -315,4 +317,6 @@ input[type=submit]:hover {
     -webkit-animation-duration:1s;
     -moz-animation-duration:1s;
     animation-duration:1s;
+    
+    z-index: 0;
 }
