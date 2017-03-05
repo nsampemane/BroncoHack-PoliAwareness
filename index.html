@@ -65,7 +65,7 @@
 			document.write(atob(testyj.text.doc));
 			</script>
 		</div>
-		<input type="submit" id="back" value="Back" onclick="backToMain()" />
+		<input type="submit" id="back" value="Back" onclick="backToMain()" disabled/>
 		
 	</body>
 	
@@ -74,7 +74,7 @@
 		var current =  document.getElementById("firstBox");
 		function upcoming() {
 			//console.log("Upcoming");
-			transitionOut("firstBox");
+			transitionOut(current);
 		}
 	
 		function search() {
@@ -100,19 +100,31 @@
 		function specificBill() {
 			var boxTwo = document.getElementById("secondBox");
 			current = boxTwo;
-			boxTwo.classList.remove("translateOut");
-			boxTwo.classList.add("fade-in");
+			setTimeout(function(){
+				current.classList.remove("translateOut");
+				current.classList.add("fade-in");
+				document.getElementById("back").style.opacity = 1;
+				document.getElementById("back").disabled = false;
+			}, 500); 
+			
 		}
 	
 		function transitionOut(x) {
 			x.classList.add("translateOut");
+			x.style.opacity="0";
 		}
 		
 		function backToMain() {
 			transitionOut(current);
 			var firstBox = document.getElementById("firstBox");
-			firstBox.classList.remove("translateOut");
-			firstBox.classList.add("fade-in");
+			current = firstBox;
+			setTimeout(function(){
+				current.classList.remove("translateOut");
+				current.classList.add("fade-in");
+			}, 500); 
+			
+			document.getElementById("back").style.opacity = 0;
+			document.getElementById("back").disabled = true;
 		}
 
 	</script>
