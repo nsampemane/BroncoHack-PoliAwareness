@@ -50,8 +50,8 @@
 		<!-- List Box -->
 		<div id="thirdBox">
 			<h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
-			<ol id="list">
-			</ol>
+			<div id="list">
+			</div>
 		</div>
 		
 
@@ -144,20 +144,96 @@
 			}	
 		}
 		
-		
+		function boldHTML(x) {
+      var element = document.createElement("b");
+      element.innerHTML = x;
+      return element;
+    }
+
+
 		// Bill
-		function fillUpcoming(x) {
-			var el = document.getElementById("list");
+    function fillUpcoming(x) {
+		var body = document.getElementsByTagName('body')[0];
+    var tbl = document.createElement('table');
+    tbl.setAttribute('style', 'border-color: #ffffff')
+    
+    var name = "SB173 - Real Estate BITCH"
+    var dateData = '2007-01-01'
+    var actionData = 'Read in congress'
+    var descStuff = 'Existing law establishes in state government the Business, Consumer Services, and Housing Agency, which is comprised of various departments including the Department of Consumer Affairs. Existing law establishes the Bureau of Real Estate within the Department of Consumer Affairs to license and regulate real estate brokers and real estate salespersons.This bill would remove the bureau from the Department of Consumer Affairs and instead make it a department within the Business, Consumer Services, and Housing Agency and rename the bureau to the Department of Real Estate. The bill would also make other conforming changes.'
+
+    tbl.style.width = '100%';
+    tbl.setAttribute('border', '0');
+    tbl.setAttribute('style', 'border-collapse: collapse; border-color: #ffffff; width: 100%; text-align: left');
+    var tbdy = document.createElement('tbody');
+    for(var j = 0; j <4; j++) {
+      //Title
+      var title = document.createElement('tr');
+      title.setAttribute('style', 'border-color: #ffffff')
+      var titleData = document.createElement('td');
+      titleData.setAttribute("colSpan", "2");
+      title.setAttribute('style', 'border-color: #ffffff; font-size: 20px; font-weight: bold')
+      titleData.appendChild(document.createTextNode('' + name))
+      title.appendChild(titleData)
+      tbdy.appendChild(title);
+
+      //Date and Action
+      var dateAction = document.createElement('tr');
+      dateAction.setAttribute('style', 'border-color: #ffffff')
+      var date = document.createElement('td');
+      date.setAttribute('style', 'border-color: #ffffff; font-size: 15px')
+      var action = document.createElement('td');
+      action.setAttribute('style', 'border-color: #ffffff; font-size: 15px')
+      date.appendChild(boldHTML('Date: '))
+      date.appendChild(document.createTextNode(dateData))
+      action.appendChild(boldHTML('Action: '))
+      action.appendChild(document.createTextNode(actionData))
+      dateAction.appendChild(date)
+      dateAction.appendChild(action)
+      tbdy.appendChild(dateAction);
+
+      //Desc
+      var desc = document.createElement('tr');
+      desc.setAttribute('style', 'border-color: #ffffff')
+      var descData = document.createElement('td');
+      descData.setAttribute("colSpan", "2");
+      descData.setAttribute("style", "font-size: 15px; padding-bottom: 25px")
+      descData.appendChild(boldHTML('Desc: '))
+      descData.appendChild(document.createTextNode(descStuff))
+      desc.appendChild(descData)
+      tbdy.appendChild(desc);
+  }
+    tbl.appendChild(tbdy);
+    var el = document.getElementById("list");
+    el.appendChild(tbl);
+
+      /*var el = document.getElementById("list");
 			el.innerHTML = "";
 			for(var i = 0; i<x ; i++) {
 				var node = document.createElement("li");
-				var link = document.createElement("a");
-				link.innerText = "Hi";
-				link.setAttribute("href", "#");
+				var link = document.createElement("table");
+        link.setAttribute("id", "myTable" + i);
+        el.appendChild(link);
+				
+        var y = document.createElement("TR");
+        y.setAttribute("id", "myTr");
+        document.getElementById("myTable").appendChild(y);
+
+        var w = document.createElement("TR");
+        w.setAttribute("id", "myTr");
+        document.getElementById("myTable").appendChild(w);
+
+        var z = document.createElement("TH");
+        var t = document.createTextNode("cell");
+        z.appendChild(t);
+        document.getElementById("myTr").appendChild(z);
+
+        link.innerText = "Hi";
+				
 				link.setAttribute("onclick", "clickedBill();");
 				node.appendChild(link);
 				el.appendChild(node);
-			}	
+			}	*/
 		}
 		
 		function clickedBill(x) {

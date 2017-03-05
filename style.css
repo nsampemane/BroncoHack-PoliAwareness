@@ -140,8 +140,8 @@ hr {
 	text-align: left;
 }
 
-#thirdBox ol, ul {
-	overflow-y: scroll;
+#thirdBox {
+  overflow-y: scroll;
 }
 
 #centerBox {
