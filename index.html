@@ -182,14 +182,18 @@
 		return JSON.parse(req.responseText);
 	}
 	
-		//1439185
+		function b64DecodeUnicode(str) {
+			return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+				return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+			}).join(''));
+		}
 		
 		function fillBillInfo(x) {
 			var xhr = new XMLHttpRequest();
 			xhr.open("GET", url + "getBillText&id="+getDocNumber(x), false);
 			xhr.send();
 			testyj = JSON.parse(xhr.responseText);
-			document.getElementById("text").innerHTML = atob(testyj.text.doc);
+			document.getElementById("text").innerHTML = b64DecodeUnicode(testyj.text.doc);
 		}
 	
 	
