@@ -217,32 +217,32 @@
 		}
 	
 		function otherSearch(x = null) {
-			var billNum;
-      if(x!=null) {
-        billNum = x;
-      } else {
-        billNum = document.getElementById("bill").value;
-      }
-			var day;
-			if (document.getElementById("day") != null) {
-				day = document.getElementById("day").value;
-			} else {
-				day = null;
-			}
-			console.log("Search for:", billNum, day);
+				var billNum;
+			  if(x!=null) {
+				billNum = x;
+			  } else {
+				billNum = document.getElementById("bill").value;
+			  }
+					var day;
+					if (document.getElementById("day") != null) {
+						day = document.getElementById("day").value;
+					} else {
+						day = null;
+					}
+					console.log("Search for:", billNum, day);
 			
-      if(billNum != "") {
-        if(dictionary[billNum] == undefined) {
-          alert("Invalid bill, you bitch. Also, fuck you, and have a blessed day");
-        } else {
-          transitionOut(current);
-          specificBill();
-        }
-      } else {
-        transitionOut(current);
-        fillUpcoming(10, day);
-        presentList();
-      }
+			  if(billNum != "") {
+				if(dictionary[billNum] == undefined) {
+				  alert("Invalid bill, you bitch. Also, fuck you, and have a blessed day");
+				} else {
+				  transitionOut(current);
+				  specificBill(x);
+				}
+			  } else {
+				transitionOut(current);
+				fillUpcoming(10, day);
+				presentList();
+			  }
 		}
 		
 		function boldHTML(x) {
@@ -253,11 +253,11 @@
 
     function linkHTML(x, num) {
       var element = document.createElement("a");
-      console.log(num)
+      
       element.setAttribute('onclick', "otherSearch('"+num+"'); return false;");
       element.setAttribute('href', 'javascript:void(0);');
       element.innerHTML = x;
-      console.log(element);
+      
       return element;
     }
 
@@ -281,7 +281,10 @@
       var titleData = document.createElement('td');
       titleData.setAttribute("colSpan", "2");
       title.setAttribute('style', 'border-color: #ffffff; font-size: 20px; font-weight: bold')
-      titleData.appendChild(document.createTextNode(list[j]['number'] + ' - ' + linkHTML(list[j]['title'], list[j]['number'])))
+      var htmlStr = linkHTML(list[j]['title'], list[j]['number']);
+      //console.log(htmlStr);
+      titleData.appendChild(document.createTextNode(list[j]['number'] + ' - '))
+      titleData.appendChild(htmlStr);
       title.appendChild(titleData)
       tbdy.appendChild(title);
 
@@ -313,6 +316,7 @@
   }
     tbl.appendChild(tbdy);
     var el = document.getElementById("list");
+    el.innerHTML = "";
     el.appendChild(tbl);
 		}
 		
@@ -331,9 +335,13 @@
 		}
 	
 	// Transitions
-		function specificBill() {
-			var billNum = document.getElementById("bill").value;
-			
+		function specificBill(x) {
+			var billNum;
+			  if(x!=null) {
+				billNum = x;
+			  } else {
+				billNum = document.getElementById("bill").value;
+			  }
 			console.log(billNum);
 			console.log(dictionary[billNum]);
 			fillBillInfo(dictionary[billNum]);
