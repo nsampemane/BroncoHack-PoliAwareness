@@ -22,7 +22,9 @@
 		<!-- Main Screen -->
     <div id="firstBox">
 			<form id="centerBox" class="fade-in" action="javascript:void(0);">
-				<h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
+				<!-- hidden button -->
+        <input type="submit" class="defaultsink" onclick="search()" />
+        <h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
         <input type="submit" value="Upcoming" onclick="upcoming()" />
         <h3>- OR -</h3>
 
@@ -32,7 +34,7 @@
         <label for="day">Day</label><br>
 				<input type="date" id="day" name="day"><br>
 
-				<input type="submit" value="Search" onclick="search()" />
+				<input type="submit" value="Search" onclick="search()" tabindex="0">
 			</form>
 		</div>
 		
