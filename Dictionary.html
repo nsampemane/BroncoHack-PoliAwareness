@@ -17,7 +17,11 @@ var ids = [];
 
 
 for (var key in test.masterlist)
-{
+{	
+	if (isNaN(key))
+	{
+		continue; //skips over non-number at end
+	}
 	dicty[test.masterlist[key].number] = test.masterlist[key].bill_id;
 	ids.push[test.masterlist[key].bill_id];
 	document.write( test.masterlist[key].number+ '\n' + dicty[test.masterlist[key].number]);
