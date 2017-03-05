@@ -128,13 +128,16 @@
 			} else {
 				day = null;
 			}
-			//console.log("Search for:", billNum, day);
+			console.log("Search for:", billNum, day);
 			
 			if (billNum != "" || day != "") {
-				
-				transitionOut(document.getElementById("firstBox"));
-				if (billNum != "") {
-					specificBill();
+				if(dictionary[billNum] == undefined) {
+					alert("Invalid bill, you bitch. Also, fuck you, and havae a blessed day");
+				} else {
+					transitionOut(document.getElementById("firstBox"));
+					if (billNum != "") {
+						specificBill();
+					}
 				}
 			}	
 		}
