@@ -201,6 +201,10 @@ input[type=date], select {
     font-size: 3vh;
 }
 
+input[type=date]:invalid::-webkit-datetime-edit {
+    color: #a8a8a8;
+}
+
 input, select, textarea, button{
 	font-family:inherit;
 }
