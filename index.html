@@ -133,7 +133,7 @@
 			console.log("Search for:", billNum, day);
 			
 			if (billNum != "" || day != "") {
-				if(dictionary[billNum] == undefined) {
+				if(dictionary[billNum] == undefined && day == "") {
 					alert("Invalid bill, you bitch. Also, fuck you, and have a blessed day");
 				} else {
 					transitionOut(document.getElementById("firstBox"));
