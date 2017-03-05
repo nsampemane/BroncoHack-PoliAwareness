@@ -32,7 +32,7 @@
 		return dicty
 
 	}
-	function getSortedBills(jsession)
+	function getSortedBills(jsession,day = null)
 	{
 		var times= {};
 		var ids = [];
@@ -43,9 +43,13 @@
 			{
 				continue; //skips over non-number at end
 			}
+			var datestring = jsession.masterlist[key].last_action_date;
 			var id = jsession.masterlist[key].bill_id;
-			
-			var date = new Date(jsession.masterlist[key].last_action_date);
+			if (day!= null && day!= datestring)
+			{
+				continue; //skips over if date is provided and not current
+			}
+			var date = new Date(datestring);
 			
 			dateInMs = date.getTime();
 			times[id] = dateInMs;
@@ -67,32 +71,27 @@
 	    
 	    return docNumber;
 	}
-	function getUpcoming(target = 10)
-	{	
-		var count = 0;
-		function isUpcoming(billID)
+	function isUpcoming(billID)
+	{
+			
+		info= getBill(billID);
+		if (info.bill.status <=3)
 		{
-			
-			info= getBill(billID);
-			if (info.bill.status <=3)
-			{
-				return true;
-			}
-			return false;
-			
+			return true;
 		}
-		
-        var sortedBills = getSortedBills(test);
-		
-        var output= [];
-		
-		for (var item in sortedBills)
-		{
+		return false;
 			
+	}
+	function getUpcoming(target = 10,datestring = null)
+	{	
+		var count = 0;		
+        var sortedBills = getSortedBills(test,datestring);		
+        var output= [];		
+		for (var item in sortedBills)
+		{			
 			if (isUpcoming(sortedBills[item]))
 			{
-				count++
-				
+				count++;				
 				jbill = getBill(sortedBills[item]);				
 				output.push(getTags(jbill));
 				
@@ -132,9 +131,9 @@
 	
 	
 	//console.log(getBill(892574));
-	console.log(upcoming(20));
+	console.log(getUpcoming(20,"2017-03-05"));
 	
-	function getOnDay(
+
 
 </script>
 </body>
