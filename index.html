@@ -1,82 +1,66 @@
 <!DOCTYPE html>
 
-<meta name=viewport content="width=device-width, initial-scale=1">
-
 <html>
   <head>
     <title>CalVote</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
     <!-- cdn for modernizr, if you haven't included it already -->
-	<script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
-	<!-- polyfiller file to detect and load polyfills -->
-	<script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
-	<script>
-	  webshims.setOptions('waitReady', false);
-	  webshims.setOptions('forms-ext', {types: 'date'});
-	  webshims.polyfill('forms forms-ext');
-	</script>
-
+    <script src="http://cdn.jsdelivr.net/webshim/1.12.4/extras/modernizr-custom.js"></script>
+    <!-- polyfiller file to detect and load polyfills -->
+    <script src="http://cdn.jsdelivr.net/webshim/1.12.4/polyfiller.js"></script>
+    <script>
+      webshims.setOptions('waitReady', false);
+      webshims.setOptions('forms-ext', {types: 'date'});
+      webshims.polyfill('forms forms-ext');
+    </script>
   </head>
 
+
+
 	<body>
-
-		<div id="firstBox">
+		<!-- Main Screen -->
+    <div id="firstBox">
 			<form id="centerBox" class="fade-in" action="javascript:void(0);">
-				<h3>
-				<span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span>
-				</h3>
-  
-				<input type="submit" value="Upcoming" onclick="upcoming()" />
+				<h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
+        <input type="submit" value="Upcoming" onclick="upcoming()" />
+        <h3>- OR -</h3>
 
-		  <h3>- OR -</h3>
-
-
-
-			<label for="bill">Bill Number</label>
+        <label for="bill">Bill Number</label>
 				<input type="text" id="bill" name="firstname" placeholder="Number...">
 
-
-				<label for="day">Day</label><br>
+        <label for="day">Day</label><br>
 				<input type="date" id="day" name="day"><br>
-
-
-				<!--<label for="county">County</label>
-				<select id="county" name="county">
-				<option value="SF">San Francisco</option>
-				<option value="SM">San Mateo</option>
-				<option value="SC">Santa Clara</option>
-				</select>-->
 
 				<input type="submit" value="Search" onclick="search()" />
 			</form>
 		</div>
-		<!-- Blank Box -->
+		
+
+    <!-- Blank Box -->
 		<div id="secondBox">
-			<h3>
-				<span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span>
-			</h3>
+			<h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
 			<div id="text">
 			</div>
 		</div>
-		<!-- List Box-->
+
+
+		<!-- List Box -->
 		<div id="thirdBox">
-			<h3>
-				<span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span>
-			</h3>
-			
+			<h3><span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span></h3>
 			<ol id="list">
 			</ol>
 		</div>
-		<input type="submit" id="back" value="Back" onclick="backToMain()" disabled/>
 		
+
+    <input type="submit" id="back" value="Back" onclick="backToMain()" disabled/>
 	</body>
 	
+
 	<script>
-	
-	// Dictionary
-		var key = "d09ad1beb3b885847a39492a0f66987d";
-		var url = "https://api.legiscan.com/?key=" + key + "&op=";
+    // Dictionary
+    var key = "d09ad1beb3b885847a39492a0f66987d";
+    var url = "https://api.legiscan.com/?key=" + key + "&op=";
 
 		var xhr = new XMLHttpRequest();
 		xhr.open("GET", url + "getMasterList&id=1400", false);
@@ -231,10 +215,5 @@
 			document.getElementById("back").style.opacity = 0;
 			document.getElementById("back").disabled = true;
 		}
-		
-		
-		
-		
-
 	</script>
 </html>
