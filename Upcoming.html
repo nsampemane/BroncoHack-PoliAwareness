@@ -64,7 +64,7 @@
 	    
 	    var test= getBill(billNumber);
 	    var docNumber= test.bill.texts[test.bill.texts.length-1].doc_id; //test.bill.texts is an array so gets current version (last item in x)
-	    document.write(docNumber);
+	    
 	    return docNumber;
 	}
 	function upcoming(target = 10)
@@ -88,20 +88,22 @@
 		
 		for (var item in sortedBills)
 		{
-			sortedBills[sortedBills[item]]
+			
 			if (isUpcoming(sortedBills[item]))
 			{
 				count++
-				//upcomingList.push(sortedBills[item]);
+				
 				jbill = getBill(sortedBills[item]);
 				var toadd = {};
+				var hislength = jbill.bill.history.length;
 				toadd["id"] = sortedBills[item]; //from above
-				toadd["date"] = jbill.bill.history[history.length-1].date;
+				toadd["date"] = jbill.bill.history[hislength-1].date;
 				toadd["description"] = jbill.bill.description;
-				toadd["action"] = jbill.bill.history[history.length-1].action;
+				toadd["action"] = jbill.bill.history[hislength-1].action;
 				toadd["number"] = jbill.bill.bill_number;
 				toadd["title"] = jbill.bill.title;
 				output.push(toadd);
+				
 			}
 			if (count >= target)
 			{
@@ -122,7 +124,7 @@
 		return JSON.parse(req.responseText);
 	}
 	//console.log(getBill(892574));
-	console.log(upcoming());
+	console.log(upcoming(20));
 	
 	
 
