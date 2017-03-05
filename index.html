@@ -50,12 +50,15 @@
 				<input type="submit" value="Search" onclick="search()" />
 			</form>
 		</div>
+		
+		<input type="submit" value="Back" onclick="backToMain()" />
+		
 	</body>
 	
 	<script>
 		function upcoming() {
 			console.log("Upcoming");
-			transitionOut();
+			transitionOut("firstBox");
 		}
 	
 		function search() {
@@ -66,14 +69,22 @@
 			} else {
 				day = null;
 			}
-			
 			console.log("Search for:", billNum, day);
-			transitionOut();
+			
+			if (billNum != "" || day != "") {
+				transitionOut("firstBox");
+			}
 		}
 	
-		function transitionOut() {
-			var box = document.getElementById("firstBox");
+		function transitionOut(x) {
+			var box = document.getElementById(x);
 			box.classList.add("translateOut");
+		}
+		
+		function backToMain() {
+			var firstBox = document.getElementById("firstBox");
+			firstBox.classList.remove("translateOut");
+			firstBox.classList.add("fade-in");
 		}
 
 	</script>
