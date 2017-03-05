@@ -61,42 +61,70 @@
 	}
 	function getDocNumber(billNumber)
 	{
-	    var key = "d09ad1beb3b885847a39492a0f66987d";
-	    var url = "https://api.legiscan.com/?key=" + key + "&op=";
-	    var xhr = new XMLHttpRequest();
-	    xhr.open("GET", url + "getBill&id=" + billNumber, false);
-	    xhr.send();
-	    var test= JSON.parse(xhr.responseText);
+	    
+	    var test= getBill(billNumber);
 	    var docNumber= test.bill.texts[test.bill.texts.length-1].doc_id; //test.bill.texts is an array so gets current version (last item in x)
 	    document.write(docNumber);
 	    return docNumber;
 	}
-	function Upcoming
-	{
-        var List {} = getSortedBills(test);
-        var upcomingList {};
-        var billNumber;
-        var doc;
-        var i = 0;
-        var j= 0;
-	    while(List[i].bill_id !== null)
-	    {
-	        billNumber = upcomingList[i].masterlist[i].billNumber;
-	        doc = getDocNumber(billNumber);
-	        var xhr = new XMLHttpRequest();
-	        xhr.open("GET", url + "getBillText&id=" + doc, false);
-	        xhr.send();
-	        docinfo= JSON.parse(xhr.responseText);
-	        if(docinfo.bill.status <4)
-	        {
-	            upcomingList[j] = { docinfo.status_date , docinfo.title , docinfo.description}
-	            j++;
-	        }
-	        i++;
-            
-	    }
-	    return upcomingList{};
+	function upcoming(target = 10)
+	{	
+		var count = 0;
+		function isUpcoming(billID)
+		{
+			
+			info= getBill(billID);
+			if (info.bill.status <=3)
+			{
+				return true;
+			}
+			return false;
+			
+		}
+		
+        var sortedBills = getSortedBills(test);
+		
+        var output= [];
+		
+		for (var item in sortedBills)
+		{
+			sortedBills[sortedBills[item]]
+			if (isUpcoming(sortedBills[item]))
+			{
+				count++
+				//upcomingList.push(sortedBills[item]);
+				jbill = getBill(sortedBills[item]);
+				var toadd = {};
+				toadd["id"] = sortedBills[item]; //from above
+				toadd["date"] = jbill.bill.history[history.length-1].date;
+				toadd["description"] = jbill.bill.description;
+				toadd["action"] = jbill.bill.history[history.length-1].action;
+				toadd["number"] = jbill.bill.bill_number;
+				toadd["title"] = jbill.bill.title;
+				output.push(toadd);
+			}
+			if (count >= target)
+			{
+				break;
+			}
+		
+		}
+		
+		
+	    return output;
 	}
+	function getBill(billNumber)
+	{
+		
+		var req = new XMLHttpRequest();
+		req.open("GET", url + "getBill&id=" + billNumber, false);
+		req.send();
+		return JSON.parse(req.responseText);
+	}
+	//console.log(getBill(892574));
+	console.log(upcoming());
+	
+	
 
 </script>
 </body>
