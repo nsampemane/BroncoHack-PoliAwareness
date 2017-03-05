@@ -13,7 +13,7 @@ function getDocNumber(billNumber)
 	xhr.open("GET", url + "getBill&id=" + billNumber, false);
 	xhr.send();
 	var test= JSON.parse(xhr.responseText);
-	var docNumber= test.bill.change_hash;
+	var docNumber= test.bill.texts[0].doc_id;
 	document.write(docNumber);
 	return docNumber;
 }
