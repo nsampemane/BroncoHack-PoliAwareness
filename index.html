@@ -204,13 +204,17 @@
 		
 		function upcoming() {
 			transitionOut(current);
-      presentList();
 			fillUpcoming(10);
-			
+			presentList();
 		}
 	
-		function search() {
-			var billNum = document.getElementById("bill").value;
+		function search(x = null) {
+			var billNum;
+      if(x!=null) {
+        billNum = x;
+      } else {
+        billNum = document.getElementById("bill").value;
+      }
 			var day;
 			if (document.getElementById("day") != null) {
 				day = document.getElementById("day").value;
@@ -223,7 +227,7 @@
 				if(dictionary[billNum] == undefined && day == "") {
 					alert("Invalid bill, you bitch. Also, fuck you, and have a blessed day");
 				} else {
-					transitionOut(document.getElementById("firstBox"));
+					transitionOut(current);
 					if (billNum != "") {
 						specificBill();
 					}
@@ -234,6 +238,15 @@
 		function boldHTML(x) {
       var element = document.createElement("b");
       element.innerHTML = x;
+      return element;
+    }
+
+    function linkHTML(x, num) {
+      var element = document.createElement("a");
+      console.log(num)
+      element.setAttribute('onclick', 'search('+num+'); return false;');
+      element.innerHTML = x;
+      console.log(element);
       return element;
     }
 
@@ -257,7 +270,7 @@
       var titleData = document.createElement('td');
       titleData.setAttribute("colSpan", "2");
       title.setAttribute('style', 'border-color: #ffffff; font-size: 20px; font-weight: bold')
-      titleData.appendChild(document.createTextNode(list[j]['number'] + ' - ' + list[j]['title']))
+      titleData.appendChild(document.createTextNode(list[j]['number'] + ' - ' + linkHTML(list[j]['title'], list[j]['number'])))
       title.appendChild(titleData)
       tbdy.appendChild(title);
 
