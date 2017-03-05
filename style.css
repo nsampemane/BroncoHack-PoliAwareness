@@ -87,7 +87,7 @@ hr {
   }
 
 #secondBox {
-  position:relative;
+  position:absolute;
   overflow-y: scroll;
   background-color:#ffffff;
   font-size: 2.5vh;
@@ -105,11 +105,43 @@ hr {
   -moz-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
   box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
   opacity: 0;
-  
+  z-index: 100
+}
+
+#thirdBox {
+	position:absolute;
+	overflow-y: scroll;
+	background-color:#ffffff;
+	font-size: 2.5vh;
+	height: 80vh;
+	line-height: 1.5;
+	text-align: center;
+	margin-left: 10vw;
+	margin-right:10vw;
+	margin-top:5vh;
+	margin-bottom:5vh;
+	padding: 15px;
+	width: 40%;
+	min-width:200px;
+	border-radius: 5px;
+	/*transform: translate(-50%, -50%);*/
+	-webkit-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
+	-moz-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
+	box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
+	opacity: 0;
+	z-index:200;
+}
+
+#thirdBox li {
+	text-align: left;
+}
+
+#thirdBox ol, ul {
+	overflow-y: scroll;
 }
 
 #centerBox {
-	position: fixed;
+	position:absolute;
 	overflow: hidden;
 	background-color:#fff;
 	padding:15px;
@@ -125,6 +157,14 @@ hr {
 	-moz-box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
 	box-shadow: 0px 0px 43px -17px rgba(0,0,0,0.75);
 	z-index: 10000;
+}
+
+#back {
+	bottom:0px;
+	position:fixed;
+	transform: translate(-50%, -50%);
+	left:50%;
+	
 }
 
 h3 {
@@ -200,6 +240,18 @@ input[type=submit]:hover {
 	margin-right: -300% !important;
 	opacity:0;
 }
+
+#thirdBox.translateOut {
+	-webkit-transition: 2s;
+	-moz-transition: 2s;
+	-ms-transition: 2s;
+	-o-transition: 2s;
+	transition: 2s;
+	margin-left: 300% !important;
+	margin-right: -300% !important;
+	opacity:0;
+}
+
 
 #back {
 	opacity: 0;
