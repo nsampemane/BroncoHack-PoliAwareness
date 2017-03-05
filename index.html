@@ -19,7 +19,7 @@
 
 
 
-	<body>
+	<body scroll="no" style="overflow: hidden">
 		<!-- Main Screen -->
     <div id="firstBox">
 		<form id="centerBox" action="javascript:void(0);">
@@ -232,14 +232,14 @@
 					}
 					console.log("Search for:", billNum, day);
 			
-			  if(billNum != "") {
+			  if(billNum != "" && day == "") {
 				if(dictionary[billNum] == undefined) {
 				  alert("Invalid bill format");
 				} else {
 				  transitionOut(current);
 				  specificBill(x);
 				}
-			  } else if (day != "") {
+			  } else {
 				transitionOut(current);
 				fillUpcoming(10, day);
 				presentList();
