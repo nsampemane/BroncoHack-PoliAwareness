@@ -51,13 +51,29 @@
 			</form>
 		</div>
 		
-		<input type="submit" value="Back" onclick="backToMain()" />
+		<div id="secondBox">
+			<h3>
+				<span style="color: #ecbb59">Vote</span><span style="color: #0000B2">CA</span>
+			</h3>
+			<script type="text/javascript">
+			var key = "d09ad1beb3b885847a39492a0f66987d";
+			var url = "https://api.legiscan.com/?key=" + key + "&op=";
+			var xhr = new XMLHttpRequest();
+			xhr.open("GET", url + "getBillText&id=1439185", false);
+			xhr.send();
+			testyj = JSON.parse(xhr.responseText);
+			document.write(atob(testyj.text.doc));
+			</script>
+		</div>
+		<input type="submit" id="back" value="Back" onclick="backToMain()" />
 		
 	</body>
 	
 	<script>
+	
+		var current =  document.getElementById("firstBox");
 		function upcoming() {
-			console.log("Upcoming");
+			//console.log("Upcoming");
 			transitionOut("firstBox");
 		}
 	
@@ -69,19 +85,31 @@
 			} else {
 				day = null;
 			}
-			console.log("Search for:", billNum, day);
+			//console.log("Search for:", billNum, day);
 			
 			if (billNum != "" || day != "") {
-				transitionOut("firstBox");
+				
+				transitionOut(document.getElementById("firstBox"));
+				if (billNum != "") {
+					specificBill();
+				}
 			}
+			
+		}
+		
+		function specificBill() {
+			var boxTwo = document.getElementById("secondBox");
+			current = boxTwo;
+			boxTwo.classList.remove("translateOut");
+			boxTwo.classList.add("fade-in");
 		}
 	
 		function transitionOut(x) {
-			var box = document.getElementById(x);
-			box.classList.add("translateOut");
+			x.classList.add("translateOut");
 		}
 		
 		function backToMain() {
+			transitionOut(current);
 			var firstBox = document.getElementById("firstBox");
 			firstBox.classList.remove("translateOut");
 			firstBox.classList.add("fade-in");
